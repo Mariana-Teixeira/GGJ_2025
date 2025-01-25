@@ -43,7 +43,9 @@ public class ToddlerMillionaire : BaseActivity
     private float _questionTime;
 
     private bool _miniGameTimer;
-    private bool _questionSelected;
+    private bool _correctQuestion;
+    private bool _player1WrongQuestion;
+    private bool _player2WrongQuestion;
 
     private string _answer1;
     private string _answer2;
@@ -82,7 +84,9 @@ public class ToddlerMillionaire : BaseActivity
         _player2Count = 0;
 
         _miniGameTimer = false;
-        _questionSelected = false;
+        _correctQuestion = false;
+        _player1WrongQuestion = false;
+        _player2WrongQuestion = false;
 
         _answer1 = "";
         _answer2 = "";
@@ -150,65 +154,65 @@ public class ToddlerMillionaire : BaseActivity
 
     private void ShowGame()
     {
-        if (Input.GetKeyDown(_player1option1))
+        if (Input.GetKeyDown(_player1option1) && !_player1WrongQuestion)
         {
-            _questionSelected = true;
             if (_answer1.Equals(_correctAnswer))
             {
                 _player1Count++;
+                _correctQuestion = true;
                 Debug.Log("Correct");
-
             }
             else
             {
+                _player1WrongQuestion = true;
                 Debug.Log("Wrong");
             }
         }
-        if (Input.GetKeyDown(_player1option2))
+        if (Input.GetKeyDown(_player1option2) && !_player1WrongQuestion)
         {
-            _questionSelected = true;
             if (_answer2.Equals(_correctAnswer))
             {
                 _player1Count++;
                 Debug.Log("Correct");
-
+                _correctQuestion = true;
             }
             else
             {
+                _player1WrongQuestion = true;
                 Debug.Log("Wrong");
             }
         }
         
-        if (Input.GetKeyDown(_player2option1))
+        if (Input.GetKeyDown(_player2option1) && !_player2WrongQuestion)
         {
-            _questionSelected = true;
             if (_answer1.Equals(_correctAnswer))
             {
                 _player2Count++;
                 Debug.Log("Correct");
-
+                _correctQuestion = true;
             }
             else
             {
+                _player2WrongQuestion = true;
                 Debug.Log("Wrong");
             }
         }
-        if (Input.GetKeyDown(_player2option2))
+        if (Input.GetKeyDown(_player2option2) && !_player2WrongQuestion)
         {
-            _questionSelected = true;
             if (_answer2.Equals(_correctAnswer))
             {
                 _player2Count++;
                 Debug.Log("Correct");
-
+                _correctQuestion = true;
             }
             else
             {
+                _player2WrongQuestion = true;
                 Debug.Log("Wrong");
             }
         }
 
-        if (_questionTime <= 0.0f || _questionSelected)
+        if (_questionTime <= 0.0f || _correctQuestion || (_player1WrongQuestion && _player2WrongQuestion))
         {
             ChangeQuestion();
         }
@@ -216,7 +220,9 @@ public class ToddlerMillionaire : BaseActivity
 
     private void ChangeQuestion()
     {
-        _questionSelected = false;
+        _correctQuestion = false;
+        _player1WrongQuestion = false;
+        _player2WrongQuestion = false;
         _questionTime = 3.0f;
 
         // var randomNum = _questionsList[Random.Range(0, 4)];
