@@ -115,11 +115,11 @@ public class ToddlerMillionaire : BaseActivity
         {
             _miniGameTime -= Time.deltaTime;
             //show 20 second timer
-            _miniGameTimerText.GetComponent<TMP_Text>().text = "Mini Game Time: " + (int)_miniGameTime;
+            _miniGameTimerText.text = "Mini Game Time: " + (int)_miniGameTime;
 
             _questionTime -= Time.deltaTime;
             //show 3 second timer
-            _questionTimerText.GetComponent<TMP_Text>().text = "Time to answer: " + (int)_questionTime;
+            _questionTimerText.text = "Time to answer: " + (int)_questionTime;
 
             ShowGame();
             
