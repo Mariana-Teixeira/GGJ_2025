@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SpamCompetition : MonoBehaviour
@@ -12,24 +13,37 @@ public class SpamCompetition : MonoBehaviour
 
     private bool _timer;
 
-    private KeyCode _player1key = KeyCode.A;
-    private KeyCode _player2key = KeyCode.L;
+    private KeyCode _player1key;
+    private KeyCode _player2key;
 
-    void Start()
+    private ActivityManager _activityManager;
+
+    private void Awake()
+    {
+        _activityManager = GetComponent<ActivityManager>();
+        _activityManager.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        _player1key = SceneManager.Instance.Player1Keys.PrimaryKey;
+        _player2key = SceneManager.Instance.Player2Keys.PrimaryKey;
+    }
+
+    private void OnEnable()
     {
         _player1Counter = 0;
         _player2Counter = 0;
         _targetTime = 5.0f;
         _timer = false;
-        //StartTimer();
+        StartTimer();
     }
 
-    void Update()
+    private void Update()
     {
-        if (_timer)
-        {
-            _targetTime -= Time.deltaTime;
-        }
+        if (!_timer) return;
+        
+        _targetTime -= Time.deltaTime;
 
         if(_targetTime <= 0.0f)
         {
@@ -37,14 +51,14 @@ public class SpamCompetition : MonoBehaviour
         }
 
         //player 1 key
-        if (Input.GetKeyDown(_player1key) && _timer)
+        if (Input.GetKeyDown(_player1key))
         {
             _player1Counter++;
             _circle1.localScale = new Vector3(_player1Counter, _player1Counter);
         }
 
         //player 2 key
-        if (Input.GetKeyDown(_player2key) && _timer)
+        if (Input.GetKeyDown(_player2key))
         {
             _player2Counter++;
             _circle2.localScale = new Vector3(_player2Counter, _player2Counter);
@@ -53,10 +67,6 @@ public class SpamCompetition : MonoBehaviour
 
     private void TimerEnded()
     {        
-        
-        _targetTime = 5.0f;
-        _timer = false;
-
         // if counters are equal
         if (_player1Counter == _player2Counter)
         {
@@ -73,12 +83,9 @@ public class SpamCompetition : MonoBehaviour
             //player 1 takes damage
             Debug.Log("player 2 won");
         }
-        
-        _player1Counter = 0;
-        _player2Counter = 0;
     }
 
-    public void StartTimer()
+    private void StartTimer()
     {
         _timer = true;
     }

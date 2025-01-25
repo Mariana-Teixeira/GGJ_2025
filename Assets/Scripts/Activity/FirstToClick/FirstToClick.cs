@@ -12,6 +12,21 @@ namespace Activity.FirstToClick
         public float Time;
         public bool Clicked;
         public bool ValidMove;
+
+        public PlayerData(KeyCode code)
+        {
+            Key = code;
+            Time = 0f;
+            Clicked = false;
+            ValidMove = false;
+        }
+
+        public void Reset()
+        {
+            Time = 0f;
+            Clicked = false;
+            ValidMove = false;
+        }
     }
      
      public class FirstToClick : MonoBehaviour
@@ -22,11 +37,9 @@ namespace Activity.FirstToClick
          [SerializeField] private float _timeRange;
          [SerializeField] private AudioClip _executionClip;
      
-         [Header("Player Parameters")]
-         [SerializeField] private KeyCode _player1Key;
-         [SerializeField] private KeyCode _player2Key;
+         private KeyCode _player1Key;
+         private KeyCode _player2Key;
 
-         private IEnumerator execution;
          private IEnumerator timer;
 
          private PlayerData _player1;
@@ -44,10 +57,19 @@ namespace Activity.FirstToClick
              _activityManager.gameObject.SetActive(false);
          }
 
+         private void Start()
+         {
+             _player1Key = SceneManager.Instance.Player1Keys.PrimaryKey;
+             _player2Key = SceneManager.Instance.Player2Keys.PrimaryKey;
+
+             _player1 = new PlayerData(_player1Key);
+             _player2 = new PlayerData(_player2Key);
+         }
+
          private void OnEnable()
          {
              SetParameters();
-             StartCoroutine(execution);
+             StartCoroutine(Execute());
          }
 
          private void OnDisable()
@@ -58,7 +80,7 @@ namespace Activity.FirstToClick
          private void Reset()
          {
              StopAllCoroutines();
-             StartCoroutine(execution);
+             StartCoroutine(Execute());
          }
 
          private void SetParameters()
@@ -67,28 +89,13 @@ namespace Activity.FirstToClick
              var firstTimer = new WaitForSeconds(_perfectTime);
              var secondTimer = new WaitForSeconds(_timeRange);
              timer = StartTimer(firstTimer, secondTimer);
-             execution = Execute();
-             
-             _player1 = new PlayerData
-             {
-                 Key = _player1Key,
-                 Time = 0,
-                 Clicked = false,
-                 ValidMove = false
-             };
-             
-             _player2 = new PlayerData
-             {
-                 Key = _player2Key,
-                 Time = 0,
-                 Clicked = false,
-                 ValidMove = false
-             };
+             _player1.Reset();
+             _player2.Reset();
          }
      
          private void Update()
          {
-             if (Input.GetKeyDown(KeyCode.R)) Reset();
+             // if (Input.GetKeyDown(KeyCode.R)) Reset();
              if (!_isExecuting) return;
              
              _stopwatchTime += Time.deltaTime;
