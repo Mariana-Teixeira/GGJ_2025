@@ -41,7 +41,7 @@ public class SpamCompetition : BaseActivity
 
     public override void EndActivity()
     {
-        
+        _timer = false;
     }
 
     private void Update()
@@ -53,6 +53,7 @@ public class SpamCompetition : BaseActivity
         if(_targetTime <= 0.0f)
         {
             TimerEnded();
+            _onFinish.Invoke(new ActivityData());
         }
 
         //player 1 key

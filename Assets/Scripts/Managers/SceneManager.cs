@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public struct PlayerKeys
@@ -17,7 +18,7 @@ public class SceneManager : MonoBehaviour
 
     [Header("Interface Parameters")]
     [SerializeField] private GameObject _intermissionScreen;
-    [SerializeField] private TMP_Text _activityTitle;
+    [FormerlySerializedAs("_activityTitle")] [SerializeField] private TMP_Text _intermissionTitle;
     [SerializeField] private float _transitionTime;
     
     [Header("Activity Parameters")]
@@ -42,7 +43,7 @@ public class SceneManager : MonoBehaviour
     {
         StartCoroutine(WaitTimer(() =>
             {
-                _activityTitle.text = _currentActivity.name;
+                _intermissionTitle.text = _currentActivity.name;
                 _intermissionScreen.SetActive(true);
             },
             () =>
@@ -60,7 +61,7 @@ public class SceneManager : MonoBehaviour
                 _currentActivity.EndActivity();
                 _currentActivity.gameObject.SetActive(false);
                 _activityIndex++;
-                _activityTitle.text = _currentActivity.name;
+                _intermissionTitle.text = _currentActivity.name;
                 _intermissionScreen.SetActive(true);
             }, () =>
             {
@@ -73,13 +74,15 @@ public class SceneManager : MonoBehaviour
     public void OnFinishGame()
     {
         _currentActivity.EndActivity();
-        Debug.Log("Game Done");
+        _currentActivity.gameObject.SetActive(false);
+        _intermissionTitle.text = "Game Done!";
+        _intermissionScreen.SetActive(true);
     }
 
     private void SetParameters()
     {
         _intermissionScreen.SetActive(false);
-        _activityTitle.text = "null";
+        _intermissionTitle.text = "null";
         _waitForSeconds = new WaitForSeconds(_transitionTime);
         
         Player1Keys = new PlayerKeys
