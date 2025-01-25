@@ -21,7 +21,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private float _transitionTime;
     
     [Header("Activity Parameters")]
-    [SerializeField] private GameObject[] _activities;
+    [SerializeField] private BaseActivity[] _activities;
+    private BaseActivity _currentActivity => _activities[_activityIndex];
     private int _activityIndex = 0;
 
     private WaitForSeconds _waitForSeconds;
@@ -39,15 +40,40 @@ public class SceneManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(WaitTimer(UpdateScreen, () =>
-        {
-           _activities[_activityIndex].SetActive(true);     
-        }));
+        StartCoroutine(WaitTimer(() =>
+            {
+                _activityTitle.text = _currentActivity.name;
+                _intermissionScreen.SetActive(true);
+            },
+            () =>
+            {
+                _intermissionScreen.SetActive(false);
+                _currentActivity.gameObject.SetActive(true);
+                _currentActivity.StartActivity();
+            }));
     }
 
-    public void OnStartNextActivity()
+    public void OnFinishActivity()
     {
-        StartCoroutine(WaitTimer(UpdateScreen, SwitchActivity));
+        StartCoroutine(WaitTimer(() =>
+            {
+                _currentActivity.EndActivity();
+                _currentActivity.gameObject.SetActive(false);
+                _activityIndex++;
+                _activityTitle.text = _currentActivity.name;
+                _intermissionScreen.SetActive(true);
+            }, () =>
+            {
+                _intermissionScreen.SetActive(false);
+                _currentActivity.gameObject.SetActive(true);
+                _currentActivity.StartActivity();
+            }));
+    }
+
+    public void OnFinishGame()
+    {
+        _currentActivity.EndActivity();
+        Debug.Log("Game Done");
     }
 
     private void SetParameters()
@@ -71,19 +97,6 @@ public class SceneManager : MonoBehaviour
         };
     }
 
-    private void SwitchActivity()
-    {
-        if (_activityIndex == 0)
-        {
-            _activities[_activityIndex].SetActive(true);
-        }
-        else
-        {
-            _activities[_activityIndex].SetActive(false);
-            _activities[++_activityIndex].SetActive(true);
-        }
-    }
-
     private IEnumerator WaitTimer(Action onStartTimer, Action onEndTimer)
     {
         _intermissionScreen.SetActive(true);
@@ -91,10 +104,5 @@ public class SceneManager : MonoBehaviour
         yield return _waitForSeconds;
         _intermissionScreen.SetActive(false);
         onEndTimer.Invoke();
-    }
-
-    private void UpdateScreen()
-    {
-        _activityTitle.text = _activities[_activityIndex].name;
     }
 }

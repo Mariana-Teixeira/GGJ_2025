@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpamCompetition : MonoBehaviour
+public class SpamCompetition : BaseActivity
 {
     [SerializeField] [Range(0, 1)] private float _growthModifier;
     [SerializeField] private Transform _circle1;
@@ -16,12 +16,9 @@ public class SpamCompetition : MonoBehaviour
     private KeyCode _player1key;
     private KeyCode _player2key;
 
-    private ActivityManager _activityManager;
-
     private void Awake()
     {
-        _activityManager = GetComponent<ActivityManager>();
-        _activityManager.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -29,8 +26,8 @@ public class SpamCompetition : MonoBehaviour
         _player1key = SceneManager.Instance.Player1Keys.PrimaryKey;
         _player2key = SceneManager.Instance.Player2Keys.PrimaryKey;
     }
-
-    private void OnEnable()
+    
+    public override void StartActivity()
     {
         _player1Counter = 0;
         _player2Counter = 0;
@@ -40,6 +37,11 @@ public class SpamCompetition : MonoBehaviour
         _circle2.localScale = new Vector3(_player2Counter * _growthModifier, _player2Counter * _growthModifier);
         
         StartTimer();
+    }
+
+    public override void EndActivity()
+    {
+        
     }
 
     private void Update()

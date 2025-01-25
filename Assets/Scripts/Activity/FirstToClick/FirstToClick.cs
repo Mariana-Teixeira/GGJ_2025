@@ -29,7 +29,7 @@ namespace Activity.FirstToClick
         }
     }
      
-     public class FirstToClick : MonoBehaviour
+     public class FirstToClick : BaseActivity
      {
          [Header("Timer Parameters")]
          [SerializeField] private float _minimumWait;
@@ -44,7 +44,6 @@ namespace Activity.FirstToClick
          private PlayerData _player1;
          private PlayerData _player2;
          
-         private ActivityManager _activityManager;
          private bool _isExecuting;
          private bool _isValidTimer;
          private float _stopwatchTime;
@@ -52,8 +51,7 @@ namespace Activity.FirstToClick
      
          private void Awake()
          {
-             _activityManager = GetComponent<ActivityManager>();
-             _activityManager.gameObject.SetActive(false);
+             this.gameObject.SetActive(false);
          }
 
          private void Start()
@@ -64,14 +62,14 @@ namespace Activity.FirstToClick
              _player1 = new PlayerData(_player1Key);
              _player2 = new PlayerData(_player2Key);
          }
-
-         private void OnEnable()
+         
+         public override void StartActivity()
          {
              SetParameters();
              StartCoroutine(Execute());
          }
 
-         private void OnDisable()
+         public override void EndActivity()
          {
              StopAllCoroutines();
          }
@@ -142,7 +140,7 @@ namespace Activity.FirstToClick
          private void FinishGame()
          {
              GetWinner();
-             _activityManager.FinishActivity(new ActivityData());
+             _onFinish.Invoke(new ActivityData());
          }
 
          private void GetWinner()

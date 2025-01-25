@@ -47,7 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _intermissionScreen: {fileID: 6121919806087776664}
   _activityTitle: {fileID: 4840459007137205091}
-  _activities: []
+  _transitionTime: 2
+  _activities:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6121919806087776664
 GameObject:
   m_ObjectHideFlags: 0
