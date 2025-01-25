@@ -36,6 +36,9 @@ public class SpamCompetition : MonoBehaviour
         _player2Counter = 0;
         _targetTime = 5.0f;
         _timer = false;
+        _circle1.localScale = new Vector3(_player1Counter * _growthModifier, _player1Counter * _growthModifier);
+        _circle2.localScale = new Vector3(_player2Counter * _growthModifier, _player2Counter * _growthModifier);
+        
         StartTimer();
     }
 
