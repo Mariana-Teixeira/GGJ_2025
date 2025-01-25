@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpamCompetition : BaseActivity
 {
     [SerializeField] [Range(0, 1)] private float _growthModifier;
+    [SerializeField] private float _startTime;
     [SerializeField] private Transform _circle1;
     [SerializeField] private Transform _circle2;
 
@@ -10,7 +11,6 @@ public class SpamCompetition : BaseActivity
     private int _player2Counter;
 
     private float _targetTime;
-
     private bool _timer;
 
     private KeyCode _player1key;
@@ -31,7 +31,7 @@ public class SpamCompetition : BaseActivity
     {
         _player1Counter = 0;
         _player2Counter = 0;
-        _targetTime = 5.0f;
+        _targetTime = _startTime;
         _timer = false;
         _circle1.localScale = new Vector3(_player1Counter * _growthModifier, _player1Counter * _growthModifier);
         _circle2.localScale = new Vector3(_player2Counter * _growthModifier, _player2Counter * _growthModifier);
