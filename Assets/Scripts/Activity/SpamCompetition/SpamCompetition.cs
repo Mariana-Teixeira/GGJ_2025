@@ -12,6 +12,9 @@ public class SpamCompetition : MonoBehaviour
 
     private bool _timer;
 
+    private KeyCode _player1key = KeyCode.A;
+    private KeyCode _player2key = KeyCode.L;
+
     void Start()
     {
         _player1Counter = 0;
@@ -34,14 +37,14 @@ public class SpamCompetition : MonoBehaviour
         }
 
         //player 1 key
-        if (Input.GetKeyDown(KeyCode.A) && _timer)
+        if (Input.GetKeyDown(_player1key) && _timer)
         {
             _player1Counter++;
             _circle1.localScale = new Vector3(_player1Counter, _player1Counter);
         }
 
         //player 2 key
-        if (Input.GetKeyDown(KeyCode.L) && _timer)
+        if (Input.GetKeyDown(_player2key) && _timer)
         {
             _player2Counter++;
             _circle2.localScale = new Vector3(_player2Counter, _player2Counter);
