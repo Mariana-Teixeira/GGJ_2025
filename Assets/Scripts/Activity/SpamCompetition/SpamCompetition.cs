@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpamCompetition : BaseActivity
 {
     [SerializeField] [Range(0, 1)] private float _growthModifier;
-    [SerializeField] private float _startTime;
+    [SerializeField] private float _time;
     [SerializeField] private Transform _circle1;
     [SerializeField] private Transform _circle2;
 
@@ -31,7 +31,7 @@ public class SpamCompetition : BaseActivity
     {
         _player1Counter = 0;
         _player2Counter = 0;
-        _targetTime = _startTime;
+        _targetTime = _time;
         _timer = false;
         _circle1.localScale = new Vector3(_player1Counter * _growthModifier, _player1Counter * _growthModifier);
         _circle2.localScale = new Vector3(_player2Counter * _growthModifier, _player2Counter * _growthModifier);
@@ -53,7 +53,6 @@ public class SpamCompetition : BaseActivity
         if(_targetTime <= 0.0f)
         {
             TimerEnded();
-            _onFinish.Invoke(new ActivityData());
         }
 
         //player 1 key
@@ -73,21 +72,17 @@ public class SpamCompetition : BaseActivity
 
     private void TimerEnded()
     {        
-        // if counters are equal
         if (_player1Counter == _player2Counter)
         {
-            //both players take damage
-            Debug.Log("players draw");
+            _onFinish.Invoke(new ActivityData(Loser.Both));
         }
         else if (_player1Counter > _player2Counter)
         {
-            //player2 takes damage
-            Debug.Log("player 1 won");
+            _onFinish.Invoke(new ActivityData(Loser.Player2));
         }
         else
         {
-            //player 1 takes damage
-            Debug.Log("player 2 won");
+            _onFinish.Invoke(new ActivityData(Loser.Player1));
         }
     }
 

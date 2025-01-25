@@ -43,6 +43,7 @@ namespace Activity.FirstToClick
 
          private PlayerData _player1;
          private PlayerData _player2;
+         private Loser _loser;
          
          private bool _isExecuting;
          private bool _isValidTimer;
@@ -123,7 +124,6 @@ namespace Activity.FirstToClick
      
          private IEnumerator StartTimer(WaitForSeconds firstTimer, WaitForSeconds secondTimer)
          {
-             Debug.Log("...");
              _isExecuting = true;
              _isValidTimer = false;
              _stopwatchTime = 0;
@@ -133,14 +133,13 @@ namespace Activity.FirstToClick
              _isValidTimer = true;
              
              yield return secondTimer;
-             Debug.Log("Time Run Out!");
              _isExecuting = false;
          }
 
          private void FinishGame()
          {
              GetWinner();
-             _onFinish.Invoke(new ActivityData());
+             _onFinish.Invoke(new ActivityData(_loser));
          }
 
          private void GetWinner()
@@ -149,17 +148,17 @@ namespace Activity.FirstToClick
              var validPlayer2 = _player2.Clicked && _player2.ValidMove;
              
              // Check Player Validity
-             if (!validPlayer1 && validPlayer2) Debug.Log("Player 2 Win!");
-             if (!validPlayer2 && validPlayer1) Debug.Log("Player 1 Win!");
-             if (!validPlayer2 && !validPlayer1) Debug.Log("Both Players Lost!");
+             if (!validPlayer1 && validPlayer2) _loser = Loser.Player1;
+             if (!validPlayer2 && validPlayer1) _loser = Loser.Player2;
+             if (!validPlayer2 && !validPlayer1) _loser = Loser.Both;
              if (!validPlayer1 || !validPlayer2) return;
 
              // Check Player Proximity
              var player1Time = _player1.Time - _perfectTime;
              var player2Time = _player2.Time - _perfectTime;
-             if (player1Time < player2Time) Debug.Log("Player 1 Wins!");
-             else if (player2Time < player1Time) Debug.Log("Player 2 Wins!");
-             else Debug.Log("Both Players Lost!");
+             if (player1Time < player2Time) _loser = Loser.Player2;
+             else if (player2Time < player1Time) _loser = Loser.Player1;
+             else _loser = Loser.Both;
          }
      }   
 }
