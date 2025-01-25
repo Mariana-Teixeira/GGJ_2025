@@ -184,11 +184,24 @@ MonoBehaviour:
   _onFinish:
     m_PersistentCalls:
       m_Calls: []
-  _questionText: {fileID: 4255661597754956112}
-  _answer1Text: {fileID: 1908006993868029564}
-  _answer2Text: {fileID: 8688402949089187083}
-  _miniGameTimerText: {fileID: 3385604010532443778}
-  _questionTimerText: {fileID: 144358761639648051}
+  _questionText: {fileID: 3473970735950412246}
+  _answer1Text: {fileID: 2330274249580520161}
+  _answer2Text: {fileID: 8380431974582356565}
+  _miniGameTimerText: {fileID: 2173472929262258504}
+  _questionTimerText: {fileID: 3171362594103363911}
+  _questionContainers:
+  - Question: Pergunta
+    Answer1: Resposta 1
+    Answer2: Resposta 2
+    CorrectAnswer: Resposta 1
+  - Question: Pergunta 2
+    Answer1: Resposta 1
+    Answer2: Resposta 2
+    CorrectAnswer: Resposta 1
+  - Question: Pergunta 3
+    Answer1: Resposta 1
+    Answer2: Resposta 2
+    CorrectAnswer: Resposta 1
 --- !u!1 &1908006993868029564
 GameObject:
   m_ObjectHideFlags: 0

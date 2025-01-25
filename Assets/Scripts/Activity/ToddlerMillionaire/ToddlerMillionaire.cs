@@ -1,8 +1,18 @@
-using NUnit.Framework;
-using UnityEngine;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public struct QuestionContainer
+{
+    public string Question;
+    public string Answer1;
+    public string Answer2;
+    public string CorrectAnswer;
+}
 
 public class ToddlerMillionaire : BaseActivity
 {
@@ -12,17 +22,19 @@ public class ToddlerMillionaire : BaseActivity
     private KeyCode _player2option1 = KeyCode.I;//SceneManager.Instance.Player2Keys.PrimaryKey;
     private KeyCode _player2option2 = KeyCode.P;//SceneManager.Instance.Player2Keys.SecondaryKey;
 
-    [SerializeField] private GameObject _questionText;
-    [SerializeField] private GameObject _answer1Text;
-    [SerializeField] private GameObject _answer2Text;
-    [SerializeField] private GameObject _miniGameTimerText;
-    [SerializeField] private GameObject _questionTimerText;
+    [SerializeField] private TMP_Text _questionText;
+    [SerializeField] private TMP_Text _answer1Text;
+    [SerializeField] private TMP_Text _answer2Text;
+    [SerializeField] private TMP_Text _miniGameTimerText;
+    [SerializeField] private TMP_Text _questionTimerText;
 
-    private List<List<string>> _questionsList = new List<List<string>>();
-    [SerializeField] private List<string> _question1 = new List<string>();
-    [SerializeField] private List<string> _question2 = new List<string>();
-    [SerializeField] private List<string> _question3 = new List<string>();
-    [SerializeField] private List<string> _question4 = new List<string>();
+    // private List<List<string>> _questionsList = new List<List<string>>();
+    // [SerializeField] private List<string> _question1 = new List<string>();
+    // [SerializeField] private List<string> _question2 = new List<string>();
+    // [SerializeField] private List<string> _question3 = new List<string>();
+    // [SerializeField] private List<string> _question4 = new List<string>();
+
+    [SerializeField] private QuestionContainer[] _questionContainers;
 
     private int _player1Count;
     private int _player2Count;
@@ -39,30 +51,30 @@ public class ToddlerMillionaire : BaseActivity
 
     private void Awake()
     {
-        _question1.Add("What color is a carrot"); //orange or a carrot
-        _question1.Add("Orange");
-        _question1.Add("Carrot");
-        _question1.Add("Orange");
-
-        _question2.Add("If you dig a 6 foot hole, how deep is that hole?"); //6 foot or 20 feet
-        _question2.Add("6 foot");
-        _question2.Add("20 feet");
-        _question2.Add("6 foot");
-
-        _question3.Add("What is 1 - 1 equal to?"); //35 or 0
-        _question3.Add("35");
-        _question3.Add("0");
-        _question3.Add("0");
-
-        _question4.Add("Spell BMW!"); //BAY or BMW
-        _question4.Add("B A Y");
-        _question4.Add("B M W");
-        _question4.Add("B M W");
-
-        _questionsList.Add(_question1);
-        _questionsList.Add(_question2);
-        _questionsList.Add(_question3);
-        _questionsList.Add(_question4);
+        // _question1.Add("What color is a carrot"); //orange or a carrot
+        // _question1.Add("Orange");
+        // _question1.Add("Carrot");
+        // _question1.Add("Orange");
+        //
+        // _question2.Add("If you dig a 6 foot hole, how deep is that hole?"); //6 foot or 20 feet
+        // _question2.Add("6 foot");
+        // _question2.Add("20 feet");
+        // _question2.Add("6 foot");
+        //
+        // _question3.Add("What is 1 - 1 equal to?"); //35 or 0
+        // _question3.Add("35");
+        // _question3.Add("0");
+        // _question3.Add("0");
+        //
+        // _question4.Add("Spell BMW!"); //BAY or BMW
+        // _question4.Add("B A Y");
+        // _question4.Add("B M W");
+        // _question4.Add("B M W");
+        //
+        // _questionsList.Add(_question1);
+        // _questionsList.Add(_question2);
+        // _questionsList.Add(_question3);
+        // _questionsList.Add(_question4);
 
         _miniGameTime = 20.0f;
         _questionTime = 3.0f;
@@ -119,13 +131,21 @@ public class ToddlerMillionaire : BaseActivity
         _miniGameTimer = true;
 
         //show first question
-        var randomStartNum = _questionsList[Random.Range(0, 4)];
-        _questionText.GetComponent<TMP_Text>().text = randomStartNum[0];
-        _answer1 = randomStartNum[1];
-        _answer2 = randomStartNum[2];
-        _answer1Text.GetComponent<TMP_Text>().text = _answer1;
-        _answer2Text.GetComponent<TMP_Text>().text = _answer2;
-        _correctAnswer = randomStartNum[3];
+        // var randomStartNum = _questionsList[Random.Range(0, 4)];
+        // _questionText.GetComponent<TMP_Text>().text = randomStartNum[0];
+        // _answer1 = randomStartNum[1];
+        // _answer2 = randomStartNum[2];
+        // _answer1Text.GetComponent<TMP_Text>().text = _answer1;
+        // _answer2Text.GetComponent<TMP_Text>().text = _answer2;
+        // _correctAnswer = randomStartNum[3];
+        
+        var question = _questionContainers[Random.Range(0, _questionContainers.Length)];
+        _questionText.text = question.Question;
+        _answer1 = question.Answer1;
+        _answer2 = question.Answer2;
+        _answer1Text.text = _answer1;
+        _answer2Text.text = _answer2;
+        _correctAnswer = question.CorrectAnswer;
     }
 
     private void ShowGame()
@@ -199,13 +219,21 @@ public class ToddlerMillionaire : BaseActivity
         _questionSelected = false;
         _questionTime = 3.0f;
 
-        var randomNum = _questionsList[Random.Range(0, 4)];
-        _questionText.GetComponent<TMP_Text>().text = randomNum[0];
-        _answer1 = randomNum[1];
-        _answer2 = randomNum[2];
-        _answer1Text.GetComponent<TMP_Text>().text = _answer1;
-        _answer2Text.GetComponent<TMP_Text>().text = _answer2;
-        _correctAnswer = randomNum[3];
+        // var randomNum = _questionsList[Random.Range(0, 4)];
+        // _questionText.GetComponent<TMP_Text>().text = randomNum[0];
+        // _answer1 = randomNum[1];
+        // _answer2 = randomNum[2];
+        // _answer1Text.GetComponent<TMP_Text>().text = _answer1;
+        // _answer2Text.GetComponent<TMP_Text>().text = _answer2;
+        // _correctAnswer = randomNum[3];
+        
+        var question = _questionContainers[Random.Range(0, _questionContainers.Length)];
+        _questionText.text = question.Question;
+        _answer1 = question.Answer1;
+        _answer2 = question.Answer2;
+        _answer1Text.text = _answer1;
+        _answer2Text.text = _answer2;
+        _correctAnswer = question.CorrectAnswer;
     }
 
     private void TimerEnded()
