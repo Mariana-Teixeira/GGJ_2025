@@ -49,7 +49,10 @@ namespace Activity.FirstToClick
          private bool _isValidTimer;
          private float _stopwatchTime;
          private float _perfectTime;
-     
+
+         private bool ArePlayersValid => _player1.ValidMove && _player2.ValidMove;
+         private bool HavePlayersClicked => _player1.Clicked && _player2.Clicked;
+              
          private void Awake()
          {
              this.gameObject.SetActive(false);
@@ -99,11 +102,6 @@ namespace Activity.FirstToClick
              _stopwatchTime += Time.deltaTime;
              CheckForClick(ref _player1);
              CheckForClick(ref _player2);
-
-             if (!_player1.Clicked || !_player2.Clicked) return;
-             _isExecuting = false;
-             StopAllCoroutines();
-             FinishGame();
          }
      
          private void CheckForClick(ref PlayerData player)
@@ -129,7 +127,7 @@ namespace Activity.FirstToClick
              _stopwatchTime = 0;
              
              yield return firstTimer;
-             Debug.Log("CLICK");
+             Debug.Log("BATH TIME!");
              _isValidTimer = true;
              
              yield return secondTimer;
@@ -148,9 +146,9 @@ namespace Activity.FirstToClick
              var validPlayer2 = _player2.Clicked && _player2.ValidMove;
              
              // Check Player Validity
-             if (!validPlayer1 && validPlayer2) _loser = Loser.Player1;
-             if (!validPlayer2 && validPlayer1) _loser = Loser.Player2;
              if (!validPlayer2 && !validPlayer1) _loser = Loser.Both;
+             else if (!validPlayer1 && validPlayer2) _loser = Loser.Player1;
+             else if (!validPlayer2 && validPlayer1) _loser = Loser.Player2;
              if (!validPlayer1 || !validPlayer2) return;
 
              // Check Player Proximity

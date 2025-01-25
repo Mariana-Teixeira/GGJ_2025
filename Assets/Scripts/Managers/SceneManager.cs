@@ -93,6 +93,8 @@ public class SceneManager : MonoBehaviour
 
     private void GetNextActivity()
     {
+        if (_activities.Length <= 1) return;
+        
         var index = _activityIndex;
         while (index == _activityIndex) index = Random.Range(0, _activities.Length);
         _activityIndex = index;
@@ -129,7 +131,7 @@ public class SceneManager : MonoBehaviour
             SecondaryKey = KeyCode.W,
             TertiaryKey = KeyCode.E
         };
-
+        
         _player2Data = new PlayerData
         {
             PrimaryKey = KeyCode.I,

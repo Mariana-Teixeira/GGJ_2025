@@ -574,6 +574,10 @@ PrefabInstance:
       value: SceneManager
       objectReference: {fileID: 0}
     - target: {fileID: 5902188009937340093, guid: 9471176c915c2d145bb59ae4dd22eefd, type: 3}
+      propertyPath: _activities.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902188009937340093, guid: 9471176c915c2d145bb59ae4dd22eefd, type: 3}
       propertyPath: '_activities.Array.data[0]'
       value: 
       objectReference: {fileID: 1403624621}
