@@ -62,6 +62,16 @@ public class BubbleGunShooter : BaseActivity
             PlayersSurvive();
             _onFinish.Invoke(new ActivityData());
         }
+        else if (_targetTime <= 0.0f && _player1RightPosition)
+        {
+            //only player 1 got the right position so player 2 takes damage
+            Debug.Log("Player 2 takes damage");
+        }
+        else if (_targetTime <= 0.0f && _player2RightPosition)
+        {
+            //only player 2 got the right position so player 1 takes damage
+            Debug.Log("Player 1 takes damage");
+        }
         else if (_targetTime <= 0.0f || (_player1WrongPosition && _player2WrongPosition))
         {
             TimerEnded();
