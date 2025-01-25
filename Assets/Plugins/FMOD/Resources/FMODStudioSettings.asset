@@ -599,8 +599,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../GGJ_2025/GGJ_2025.fspro
-  sourceBankPath: ../../GGJ_2025/Build
+  sourceProjectPath: GGJ_2025/GGJ_2025.fspro
+  sourceBankPath: GGJ_2025/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
