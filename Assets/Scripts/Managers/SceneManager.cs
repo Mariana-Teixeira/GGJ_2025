@@ -52,6 +52,6 @@ public class SceneManager : MonoBehaviour
     public void CallNextScene()
     {
         _activities[_activityIndex].SetActive(false);
-        _activities[_activityIndex++].SetActive(true);
+        _activities[++_activityIndex].SetActive(true);
     }
 }
