@@ -16,11 +16,11 @@ public struct QuestionContainer
 
 public class ToddlerMillionaire : BaseActivity
 {
-    private KeyCode _player1option1 = KeyCode.Q;//SceneManager.Instance.Player1Keys.PrimaryKey;
-    private KeyCode _player1option2 = KeyCode.E;//SceneManager.Instance.Player1Keys.SecondaryKey;
+    private KeyCode _player1option1;
+    private KeyCode _player1option2;
 
-    private KeyCode _player2option1 = KeyCode.I;//SceneManager.Instance.Player2Keys.PrimaryKey;
-    private KeyCode _player2option2 = KeyCode.P;//SceneManager.Instance.Player2Keys.SecondaryKey;
+    private KeyCode _player2option1;
+    private KeyCode _player2option2;
 
     [SerializeField] private TMP_Text _questionText;
     [SerializeField] private TMP_Text _answer1Text;
@@ -78,6 +78,33 @@ public class ToddlerMillionaire : BaseActivity
         // _questionsList.Add(_question3);
         // _questionsList.Add(_question4);
 
+        //_miniGameTime = 20.0f;
+        //_questionTime = 3.0f;
+        //_player1Count = 0;
+        //_player2Count = 0;
+
+        //_miniGameTimer = false;
+        //_correctQuestion = false;
+        //_player1WrongQuestion = false;
+        //_player2WrongQuestion = false;
+
+        //_answer1 = "";
+        //_answer2 = "";
+
+        this.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        _player1option1 = SceneManager.Instance.Player1Data.PrimaryKey;
+        _player1option2 = SceneManager.Instance.Player1Data.TertiaryKey;
+
+        _player2option1 = SceneManager.Instance.Player2Data.PrimaryKey;
+        _player2option2 = SceneManager.Instance.Player2Data.TertiaryKey;
+    }
+
+    public override void StartActivity()
+    {
         _miniGameTime = 20.0f;
         _questionTime = 3.0f;
         _player1Count = 0;
@@ -91,16 +118,6 @@ public class ToddlerMillionaire : BaseActivity
         _answer1 = "";
         _answer2 = "";
 
-        //this.gameObject.SetActive(false);
-    }
-
-    private void Start()
-    {
-        StartShow();
-    }
-
-    public override void StartActivity()
-    {
         StartShow();
     }
 
