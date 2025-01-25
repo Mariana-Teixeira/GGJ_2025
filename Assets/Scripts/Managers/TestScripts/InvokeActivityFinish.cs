@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InvokeActivityFinish : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private ActivityManager _activityManager;
+    
+    private void Start()
     {
-        
+        _activityManager = GetComponent<ActivityManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CallFinishActivity()
     {
-        
+        _activityManager.FinishActivity(new ActivityData());
     }
 }

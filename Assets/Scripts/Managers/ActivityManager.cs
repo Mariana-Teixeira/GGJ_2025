@@ -3,8 +3,7 @@ using UnityEngine.Events;
 
 public class ActivityManager : MonoBehaviour
 {
-    private UnityEvent<ActivityData> _onFinish;
-    private ActivityData _activityData;
+    [SerializeField] private UnityEvent<ActivityData> _onFinish;
 
-    public void FinishActivity(ActivityData data) => _onFinish.Invoke(_activityData);
+    public void FinishActivity(ActivityData data) => _onFinish.Invoke(data);
 }

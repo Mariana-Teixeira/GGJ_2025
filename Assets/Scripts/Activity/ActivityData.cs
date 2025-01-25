@@ -1,3 +1,1 @@
-public struct ActivityData
-{
-}
+public struct ActivityData { }

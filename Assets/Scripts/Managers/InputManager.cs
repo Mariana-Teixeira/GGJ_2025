@@ -1,10 +1,13 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
-    private void Update()
+    [SerializeField] private UnityEvent OnKeyDown;
+    
+    public void CheckForKey(KeyCode key)
     {
-        Debug.Log(Event.current.keyCode);
+        var isPressed = Input.GetKeyDown(key);
+        if (isPressed) OnKeyDown.Invoke();
     }
 }
