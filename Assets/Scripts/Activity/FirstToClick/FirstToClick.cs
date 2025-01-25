@@ -56,8 +56,8 @@ namespace Activity.FirstToClick
 
          private void Start()
          {
-             _player1Key = SceneManager.Instance.Player1Keys.PrimaryKey;
-             _player2Key = SceneManager.Instance.Player2Keys.PrimaryKey;
+             _player1Key = SceneManager.Instance.Player1Data.PrimaryKey;
+             _player2Key = SceneManager.Instance.Player2Data.PrimaryKey;
 
              _player1 = new PlayerData(_player1Key);
              _player2 = new PlayerData(_player2Key);

@@ -3,10 +3,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 [Serializable]
-public struct PlayerKeys
+public struct PlayerData
 {
+    public int Losses;
     public KeyCode PrimaryKey;
     public KeyCode SecondaryKey;
     public KeyCode TertiaryKey;
@@ -18,18 +20,20 @@ public class SceneManager : MonoBehaviour
 
     [Header("Interface Parameters")]
     [SerializeField] private GameObject _intermissionScreen;
-    [FormerlySerializedAs("_activityTitle")] [SerializeField] private TMP_Text _intermissionTitle;
+    [SerializeField] private TMP_Text _intermissionTitle;
     [SerializeField] private float _transitionTime;
     
     [Header("Activity Parameters")]
     [SerializeField] private BaseActivity[] _activities;
     private BaseActivity _currentActivity => _activities[_activityIndex];
-    private int _activityIndex = 0;
+    private int _activityIndex;
 
     private WaitForSeconds _waitForSeconds;
 
-    public PlayerKeys Player1Keys { get; private set; }
-    public PlayerKeys Player2Keys { get; private set; }
+    [Header("Player Parameters")]
+    [SerializeField] private int _maxLosses;
+    public PlayerData Player1Data { get; private set; }
+    public PlayerData Player2Data { get; private set; }
 
     private void Awake()
     {
@@ -60,7 +64,7 @@ public class SceneManager : MonoBehaviour
             {
                 _currentActivity.EndActivity();
                 _currentActivity.gameObject.SetActive(false);
-                _activityIndex++;
+                _activityIndex = Random.Range(0, _activities.Length);
                 _intermissionTitle.text = _currentActivity.name;
                 _intermissionScreen.SetActive(true);
             }, () =>
@@ -81,18 +85,19 @@ public class SceneManager : MonoBehaviour
 
     private void SetParameters()
     {
+        _activityIndex = Random.Range(0, _activities.Length);
         _intermissionScreen.SetActive(false);
         _intermissionTitle.text = "null";
         _waitForSeconds = new WaitForSeconds(_transitionTime);
         
-        Player1Keys = new PlayerKeys
+        Player1Data = new PlayerData
         {
             PrimaryKey = KeyCode.Q,
             SecondaryKey = KeyCode.W,
             TertiaryKey = KeyCode.E
         };
 
-        Player2Keys = new PlayerKeys()
+        Player2Data = new PlayerData()
         {
             PrimaryKey = KeyCode.I,
             SecondaryKey = KeyCode.O,

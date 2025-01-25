@@ -23,8 +23,8 @@ public class SpamCompetition : BaseActivity
 
     private void Start()
     {
-        _player1key = SceneManager.Instance.Player1Keys.PrimaryKey;
-        _player2key = SceneManager.Instance.Player2Keys.PrimaryKey;
+        _player1key = SceneManager.Instance.Player1Data.PrimaryKey;
+        _player2key = SceneManager.Instance.Player2Data.PrimaryKey;
     }
     
     public override void StartActivity()
