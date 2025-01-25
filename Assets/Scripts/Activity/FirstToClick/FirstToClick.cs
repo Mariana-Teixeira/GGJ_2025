@@ -35,7 +35,6 @@ namespace Activity.FirstToClick
          [SerializeField] private float _minimumWait;
          [SerializeField] private float _maximumWait;
          [SerializeField] private float _timeRange;
-         [SerializeField] private AudioClip _executionClip;
      
          private KeyCode _player1Key;
          private KeyCode _player2Key;

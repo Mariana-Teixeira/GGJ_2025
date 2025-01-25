@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 [Serializable]
@@ -12,9 +14,17 @@ public struct PlayerKeys
 public class SceneManager : MonoBehaviour
 {
     public static SceneManager Instance { get; private set; }
+
+    [Header("Interface Parameters")]
+    [SerializeField] private GameObject _intermissionScreen;
+    [SerializeField] private TMP_Text _activityTitle;
+    [SerializeField] private float _transitionTime;
     
+    [Header("Activity Parameters")]
     [SerializeField] private GameObject[] _activities;
     private int _activityIndex = 0;
+
+    private WaitForSeconds _waitForSeconds;
 
     public PlayerKeys Player1Keys { get; private set; }
     public PlayerKeys Player2Keys { get; private set; }
@@ -29,11 +39,23 @@ public class SceneManager : MonoBehaviour
 
     private void Start()
     {
-        _activities[_activityIndex].SetActive(true);
+        StartCoroutine(WaitTimer(UpdateScreen, () =>
+        {
+           _activities[_activityIndex].SetActive(true);     
+        }));
+    }
+
+    public void OnStartNextActivity()
+    {
+        StartCoroutine(WaitTimer(UpdateScreen, SwitchActivity));
     }
 
     private void SetParameters()
     {
+        _intermissionScreen.SetActive(false);
+        _activityTitle.text = "null";
+        _waitForSeconds = new WaitForSeconds(_transitionTime);
+        
         Player1Keys = new PlayerKeys
         {
             PrimaryKey = KeyCode.Q,
@@ -49,9 +71,30 @@ public class SceneManager : MonoBehaviour
         };
     }
 
-    public void CallNextScene()
+    private void SwitchActivity()
     {
-        _activities[_activityIndex].SetActive(false);
-        _activities[++_activityIndex].SetActive(true);
+        if (_activityIndex == 0)
+        {
+            _activities[_activityIndex].SetActive(true);
+        }
+        else
+        {
+            _activities[_activityIndex].SetActive(false);
+            _activities[++_activityIndex].SetActive(true);
+        }
+    }
+
+    private IEnumerator WaitTimer(Action onStartTimer, Action onEndTimer)
+    {
+        _intermissionScreen.SetActive(true);
+        onStartTimer.Invoke();
+        yield return _waitForSeconds;
+        _intermissionScreen.SetActive(false);
+        onEndTimer.Invoke();
+    }
+
+    private void UpdateScreen()
+    {
+        _activityTitle.text = _activities[_activityIndex].name;
     }
 }
