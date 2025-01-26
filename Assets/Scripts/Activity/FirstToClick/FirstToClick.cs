@@ -39,6 +39,7 @@ namespace Activity.FirstToClick
          private KeyCode _player1Key;
          private KeyCode _player2Key;
 
+         private SpriteManager _spriteManager;
          private IEnumerator timer;
 
          private PlayerData _player1;
@@ -55,6 +56,7 @@ namespace Activity.FirstToClick
          private void Awake()
          {
              this.gameObject.SetActive(false);
+             _spriteManager = GetComponent<SpriteManager>();
          }
 
          private void Start()
@@ -127,6 +129,7 @@ namespace Activity.FirstToClick
              
              yield return firstTimer;
              Debug.Log("BATH TIME!");
+             _spriteManager.ChangeToShout();
              _isValidTimer = true;
              
              yield return secondTimer;

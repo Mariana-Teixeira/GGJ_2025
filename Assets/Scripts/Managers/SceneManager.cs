@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -54,48 +53,57 @@ public class SceneManager : MonoBehaviour
     private void Start()
     {
         GetNextActivity();
-        CloseIntermissionScreen();
-        _animationManager.GoToEndAnimation();
-        StartCoroutine(WaitTimer(OpenTransmissionScreen, EndTransition));
+        StartCoroutine(WaitTimer(StartAnimation, StopAnimation));
     }
 
     public void OnFinishActivity(ActivityData data)
     {
         RemovePlayerHealth(data.Target);
-        StartCoroutine(WaitTimer(StartTransition, EndTransition));
+        StartCoroutine(WaitTimer(StartAnimation, StopAnimation));
     }
 
-    private void StartTransition()
+    private void StartAnimation()
+    {
+        // Activate Canvas Window
+        _animationManager.PlayAnimation(_transitionDuration);
+    }
+
+    private void StopAnimation()
+    {
+        // Deactivate Canvas Window
+        _animationManager.RewindAnimation(_transitionDuration);
+    }
+
+    public void StartTransition()
     {
         CloseActivity();
         GetNextActivity();
-        if (_isGameOver) OpenScoreScreen(); 
-        else OpenTransmissionScreen();
+        if (_isGameOver) UpdateScoreScreen(); 
+        else UpdateTransmissionScreen();
     }
 
-    private void EndTransition()
+    public void EndTransition()
     {
-        CloseIntermissionScreen();
         OpenActivity();
     }
 
-    private void OpenTransmissionScreen()
+    private void UpdateTransmissionScreen()
     {
         _intermissionTitle.text = _currentActivity.name;
         _player1Health.text = Player1Data.Losses.ToString();
         _player2Health.text = Player2Data.Losses.ToString();
-        _animationManager.PlayAnimation(_transitionDuration);
-    }
-
-    private void CloseIntermissionScreen()
-    {
-        _animationManager.RewindAnimation(_transitionDuration);
     }
 
     private void OpenActivity()
     {
         _currentActivity.gameObject.SetActive(true);
         _currentActivity.StartActivity();
+    }
+    
+    private void CloseActivity()
+    {
+        _currentActivity.EndActivity();
+        _currentActivity.gameObject.SetActive(false);
     }
 
     private void GetNextActivity()
@@ -107,23 +115,11 @@ public class SceneManager : MonoBehaviour
         _activityIndex = index;
     }
 
-    private void CloseActivity()
-    {
-        _currentActivity.EndActivity();
-        _currentActivity.gameObject.SetActive(false);
-    }
-
-    private void OpenScoreScreen()
+    private void UpdateScoreScreen()
     {
         _intermissionTitle.text = GetWinner();
         _player1Health.text = Player1Data.Losses.ToString();
         _player2Health.text = Player2Data.Losses.ToString();
-        _intermissionScreen.SetActive(true);
-    }
-
-    private void CloseScoreScreen()
-    {
-        
     }
 
     private void SetParameters()

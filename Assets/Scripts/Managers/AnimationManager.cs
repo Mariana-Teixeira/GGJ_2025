@@ -16,19 +16,16 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] private Ease _transitionEase;
 
     [Header("Events")]
+    [SerializeField] private UnityEvent _onStartTransitionPlay;
     [SerializeField] private UnityEvent _onStartTransitionComplete;
+    [SerializeField] private UnityEvent _onEndTransitionPlay;
     [SerializeField] private UnityEvent _onEndTransitionComplete;
-
-    public void GoToEndAnimation()
-    {
-        _leftDoor.position = _closedPosition.position;
-        _rightDoor.position = _closedPosition.position;
-    }
 
     public void PlayAnimation(float time)
     {
         _leftDoor.DOMove(_closedPosition.position, time).SetEase(_transitionEase);
         _rightDoor.DOMove(_closedPosition.position, time).SetEase(_transitionEase)
+            .OnPlay(_onStartTransitionPlay.Invoke)
             .OnComplete(_onStartTransitionComplete.Invoke);
     }
 
@@ -36,6 +33,7 @@ public class AnimationManager : MonoBehaviour
     {
         _leftDoor.DOMove(_leftOpenPosition.position, time).SetEase(_transitionEase);
         _rightDoor.DOMove(_rightOpenPosition.position, time).SetEase(_transitionEase)
+            .OnPlay(_onEndTransitionPlay.Invoke)
             .OnComplete(_onEndTransitionComplete.Invoke);
     }
 }
