@@ -11,21 +11,21 @@ namespace Activity.FirstToClick
         public KeyCode Key;
         public float Time;
         public bool Clicked;
-        public bool ValidMove;
+        public bool ValidClick;
 
         public PlayerData(KeyCode code)
         {
             Key = code;
             Time = 0f;
             Clicked = false;
-            ValidMove = false;
+            ValidClick = false;
         }
 
         public void Reset()
         {
             Time = 0f;
             Clicked = false;
-            ValidMove = false;
+            ValidClick = false;
         }
     }
      
@@ -43,14 +43,13 @@ namespace Activity.FirstToClick
 
          private PlayerData _player1;
          private PlayerData _player2;
-         private Loser _loser;
          
          private bool _isExecuting;
          private bool _isValidTimer;
          private float _stopwatchTime;
          private float _perfectTime;
 
-         private bool ArePlayersValid => _player1.ValidMove && _player2.ValidMove;
+         private bool ArePlayersValid => _player1.ValidClick && _player2.ValidClick;
          private bool HavePlayersClicked => _player1.Clicked && _player2.Clicked;
               
          private void Awake()
@@ -108,7 +107,7 @@ namespace Activity.FirstToClick
          {
              if (player.Clicked) return;
              if (!Input.GetKeyDown(player.Key)) return;
-             player.ValidMove = _isValidTimer;
+             player.ValidClick = _isValidTimer;
              player.Time = _stopwatchTime;
              player.Clicked = true;
          }
@@ -136,27 +135,23 @@ namespace Activity.FirstToClick
 
          private void FinishGame()
          {
-             GetWinner();
-             _onFinish.Invoke(new ActivityData(_loser));
+             var loser = GetWinner();
+             _onFinish.Invoke(new ActivityData(loser));
          }
 
-         private void GetWinner()
+         private Loser GetWinner()
          {
-             var validPlayer1 = _player1.Clicked && _player1.ValidMove;
-             var validPlayer2 = _player2.Clicked && _player2.ValidMove;
+             var player1Valid = _player1.Clicked || _player1.ValidClick;
+             var player2Valid = _player2.Clicked || _player2.ValidClick;
              
-             // Check Player Validity
-             if (!validPlayer2 && !validPlayer1) _loser = Loser.Both;
-             else if (!validPlayer1 && validPlayer2) _loser = Loser.Player1;
-             else if (!validPlayer2 && validPlayer1) _loser = Loser.Player2;
-             if (!validPlayer1 || !validPlayer2) return;
-
-             // Check Player Proximity
-             var player1Time = _player1.Time - _perfectTime;
-             var player2Time = _player2.Time - _perfectTime;
-             if (player1Time < player2Time) _loser = Loser.Player2;
-             else if (player2Time < player1Time) _loser = Loser.Player1;
-             else _loser = Loser.Both;
+             // Given at least one is invalid.
+             if (!player1Valid && !player2Valid) return Loser.Both;
+             else if (player1Valid && !player2Valid) return Loser.Player2;
+             else if (player2Valid && !player1Valid) return Loser.Player1;
+             // Given they are both valid.
+             else if (_player1.Time < _player2.Time) return Loser.Player2;
+             else if (_player2.Time < _player1.Time) return Loser.Player1;
+             else return Loser.Both;
          }
      }   
 }

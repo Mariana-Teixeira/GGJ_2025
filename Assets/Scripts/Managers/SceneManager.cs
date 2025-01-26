@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -13,6 +14,7 @@ public struct PlayerData
     public KeyCode TertiaryKey;
 }
 
+[RequireComponent(typeof(AnimationManager))]
 public class SceneManager : MonoBehaviour
 {
     public static SceneManager Instance { get; private set; }
@@ -20,18 +22,19 @@ public class SceneManager : MonoBehaviour
     [Header("Interface Parameters")]
     [SerializeField] private GameObject _intermissionScreen;
     [SerializeField] private TMP_Text _intermissionTitle;
-    [SerializeField] private float _transitionTime;
+    [SerializeField] private float _transitionDuration;
+    [SerializeField] private float _transitionPause;
+    private AnimationManager _animationManager;
+    private WaitForSeconds _waitForSeconds;
     [Space(10)]
     [SerializeField] private TMP_Text _player1Health;
     [SerializeField] private TMP_Text _player2Health;
     
     [Header("Activity Parameters")]
     [SerializeField] private BaseActivity[] _activities;
-    private BaseActivity _currentActivity => _activities[_activityIndex];
     private int _activityIndex;
-
-    private WaitForSeconds _waitForSeconds;
-
+    private BaseActivity _currentActivity => _activities[_activityIndex];
+    
     [Header("Player Parameters")]
     [SerializeField] private int _maxLosses;
     private PlayerData _player1Data;
@@ -44,11 +47,15 @@ public class SceneManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Debug.LogError("More than one 'SceneManagers' in Scene.");
+        
+        SetParameters();
     }
 
     private void Start()
     {
-        SetParameters();
+        GetNextActivity();
+        CloseIntermissionScreen();
+        _animationManager.GoToEndAnimation();
         StartCoroutine(WaitTimer(OpenTransmissionScreen, EndTransition));
     }
 
@@ -77,12 +84,12 @@ public class SceneManager : MonoBehaviour
         _intermissionTitle.text = _currentActivity.name;
         _player1Health.text = Player1Data.Losses.ToString();
         _player2Health.text = Player2Data.Losses.ToString();
-        _intermissionScreen.SetActive(true);
+        _animationManager.PlayAnimation(_transitionDuration);
     }
 
     private void CloseIntermissionScreen()
     {
-        _intermissionScreen.SetActive(false);
+        _animationManager.RewindAnimation(_transitionDuration);
     }
 
     private void OpenActivity()
@@ -121,9 +128,8 @@ public class SceneManager : MonoBehaviour
 
     private void SetParameters()
     {
-        GetNextActivity();
-        CloseIntermissionScreen();
-        _waitForSeconds = new WaitForSeconds(_transitionTime);
+        _animationManager = GetComponent<AnimationManager>();
+        _waitForSeconds = new WaitForSeconds(_transitionPause);
         
         _player1Data = new PlayerData
         {
