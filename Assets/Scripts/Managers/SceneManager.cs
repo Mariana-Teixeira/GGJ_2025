@@ -90,8 +90,12 @@ public class SceneManager : MonoBehaviour
     private void UpdateTransmissionScreen()
     {
         _intermissionTitle.text = _currentActivity.name;
-        _player1Health.text = Player1Data.Losses.ToString();
-        _player2Health.text = Player2Data.Losses.ToString();
+        
+        var player1Life = (_maxLosses - _player1Data.Losses).ToString();
+        _player1Health.text = player1Life;
+
+        var player2Life = (_maxLosses - _player2Data.Losses).ToString();
+        _player2Health.text = player2Life;
     }
 
     private void OpenActivity()

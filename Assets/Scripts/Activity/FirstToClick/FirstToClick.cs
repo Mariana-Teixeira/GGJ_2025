@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -71,18 +72,13 @@ namespace Activity.FirstToClick
          public override void StartActivity()
          {
              SetParameters();
+             _spriteManager.Reset();
              StartCoroutine(Execute());
          }
 
          public override void EndActivity()
          {
              StopAllCoroutines();
-         }
-
-         private void Reset()
-         {
-             StopAllCoroutines();
-             StartCoroutine(Execute());
          }
 
          private void SetParameters()
@@ -97,7 +93,6 @@ namespace Activity.FirstToClick
      
          private void Update()
          {
-             // if (Input.GetKeyDown(KeyCode.R)) Reset();
              if (!_isExecuting) return;
              
              _stopwatchTime += Time.deltaTime;
@@ -112,6 +107,9 @@ namespace Activity.FirstToClick
              player.ValidClick = _isValidTimer;
              player.Time = _stopwatchTime;
              player.Clicked = true;
+             
+             if (_player1.ValidClick) _spriteManager.Player1Shout();
+             if (_player2.ValidClick) _spriteManager.Player2Shout();
          }
 
          private IEnumerator Execute()
@@ -129,7 +127,7 @@ namespace Activity.FirstToClick
              
              yield return firstTimer;
              Debug.Log("BATH TIME!");
-             _spriteManager.ChangeToShout();
+             _spriteManager.ChangeToBath();
              _isValidTimer = true;
              
              yield return secondTimer;
