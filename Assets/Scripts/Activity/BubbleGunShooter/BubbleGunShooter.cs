@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class BubbleGunShooter : BaseActivity
 {
@@ -10,9 +11,19 @@ public class BubbleGunShooter : BaseActivity
     private KeyCode _player2option2;
     private KeyCode _player2option3;
 
+    [SerializeField] private Transform _parents;
+    [SerializeField] private Transform _character1;
+    [SerializeField] private Transform _character2;
+    [SerializeField] private TMP_Text _timerText;
+
     [SerializeField] private float _startTime;
     private float _targetTime;
-    private int _parentPosition = 1;
+    private int _parentsPosition = 1;
+    private int _character1Position = 2;
+    private int _character2Position = 3;
+    [SerializeField] private Vector2 _leftVector;
+    [SerializeField] private Vector2 _centerVector;
+    [SerializeField] private Vector2 _rightVector;
     private bool _timer;
     private bool _player1WrongPosition;
     private bool _player2WrongPosition;    
@@ -55,6 +66,7 @@ public class BubbleGunShooter : BaseActivity
         if (_timer)
         {
             _targetTime -= Time.deltaTime;
+            _timerText.text = "Time to shoot: " + (int)_targetTime;
         }
 
         if (_player1RightPosition && _player2RightPosition)
@@ -82,7 +94,7 @@ public class BubbleGunShooter : BaseActivity
 
         if (Input.GetKeyDown(_player1option1) && !_player1WrongPosition)
         {
-            if (_parentPosition == 1)
+            if (_parentsPosition == 1)
             {
                 _player1RightPosition = true;
                 Debug.Log("Right Position");
@@ -95,7 +107,7 @@ public class BubbleGunShooter : BaseActivity
         }
         if (Input.GetKeyDown(_player1option2) && !_player1WrongPosition)
         {
-            if (_parentPosition == 2)
+            if (_parentsPosition == 2)
             {
                 _player1RightPosition = true;
                 Debug.Log("Right Position");
@@ -108,7 +120,7 @@ public class BubbleGunShooter : BaseActivity
         }
         if (Input.GetKeyDown(_player1option3) && !_player1WrongPosition)
         {
-            if (_parentPosition == 3)
+            if (_parentsPosition == 3)
             {
                 _player1RightPosition = true;
                 Debug.Log("Right Position");
@@ -122,7 +134,7 @@ public class BubbleGunShooter : BaseActivity
 
         if (Input.GetKeyDown(_player2option1) && !_player2WrongPosition)
         {
-            if (_parentPosition == 1)
+            if (_parentsPosition == 1)
             {
                 _player2RightPosition = true;
                 Debug.Log("Right Position");
@@ -135,7 +147,7 @@ public class BubbleGunShooter : BaseActivity
         }
         if (Input.GetKeyDown(_player2option2) && !_player2WrongPosition)
         {
-            if (_parentPosition == 2)
+            if (_parentsPosition == 2)
             {
                 _player2RightPosition = true;
                 Debug.Log("Right Position");
@@ -148,7 +160,7 @@ public class BubbleGunShooter : BaseActivity
         }
         if (Input.GetKeyDown(_player2option3) && !_player2WrongPosition)
         {
-            if (_parentPosition == 3)
+            if (_parentsPosition == 3)
             {
                 _player2RightPosition = true;
                 Debug.Log("Right Position");
@@ -163,7 +175,57 @@ public class BubbleGunShooter : BaseActivity
 
     private void StartTimer()
     {
-        _parentPosition = Random.Range(1, 4);
+        _parentsPosition = Random.Range(1, 4);
+        _character1Position = Random.Range(1, 4);
+        _character2Position = Random.Range(1, 4);
+
+        while (_character1Position == _parentsPosition)
+        {
+            _character1Position = Random.Range(1, 4);
+        }
+        while (_character2Position == _parentsPosition || _character2Position == _character1Position)
+        {
+            _character2Position = Random.Range(1, 4);
+        }
+
+        if (_parentsPosition == 1)
+        {
+            _parents.position = _leftVector;
+        }
+        if (_parentsPosition == 2)
+        {
+            _parents.position = _centerVector;
+        }
+        if (_parentsPosition == 3)
+        {
+            _parents.position = _rightVector;
+        }
+        
+        if (_character1Position == 1)
+        {
+            _character1.position = _leftVector;
+        }
+        if (_character1Position == 2)
+        {
+            _character1.position = _centerVector;
+        }
+        if (_character1Position == 3)
+        {
+            _character1.position = _rightVector;
+        }
+        
+        if (_character2Position == 1)
+        {
+            _character2.position = _leftVector;
+        }
+        if (_character2Position == 2)
+        {
+            _character2.position = _centerVector;
+        }
+        if (_character2Position == 3)
+        {
+            _character2.position = _rightVector;
+        }
 
         _timer = true;
     }

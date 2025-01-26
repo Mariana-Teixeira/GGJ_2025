@@ -249,8 +249,16 @@ public class ToddlerMillionaire : BaseActivity
         // _answer1Text.GetComponent<TMP_Text>().text = _answer1;
         // _answer2Text.GetComponent<TMP_Text>().text = _answer2;
         // _correctAnswer = randomNum[3];
+
+
         
         var question = _questionContainers[Random.Range(0, _questionContainers.Length)];
+
+        while (question.Question.Equals(_questionText.text))
+        {
+            question = _questionContainers[Random.Range(0, _questionContainers.Length)];
+        }
+
         _questionText.text = question.Question;
         _answer1 = question.Answer1;
         _answer2 = question.Answer2;

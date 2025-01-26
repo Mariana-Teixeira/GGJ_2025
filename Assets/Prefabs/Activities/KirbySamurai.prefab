@@ -356,12 +356,12 @@ MonoBehaviour:
   _player1Sprites:
     Idle: {fileID: 21300000, guid: fdbbe1de601da5948b99db4cc0aa82e7, type: 3}
     Shouting: {fileID: 21300000, guid: db18aba8aa5728f4c83ab7babeed7fcc, type: 3}
-    Embarassed: {fileID: 1341327549031976786, guid: c39237f85c6d9dc40b53600441ad18b6, type: 3}
+    Embarassed: {fileID: 21300000, guid: c39237f85c6d9dc40b53600441ad18b6, type: 3}
   _player2Renderer: {fileID: 5112167811546205677}
   _player2Sprites:
     Idle: {fileID: 21300000, guid: 001e6ff4d13529c40a413678daa6da9f, type: 3}
     Shouting: {fileID: 21300000, guid: 2236d3deef9d3b045a57ced832ef2f02, type: 3}
-    Embarassed: {fileID: 7140858264272753089, guid: 773b7b2ce794ddc478464dc544671728, type: 3}
+    Embarassed: {fileID: 21300000, guid: 773b7b2ce794ddc478464dc544671728, type: 3}
   _bathTimeLine: {fileID: 2777387318098972447}
   _player1Line: {fileID: 3982356514663819047}
   _player2Line: {fileID: 2637290167054831446}
