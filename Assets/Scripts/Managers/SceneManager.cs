@@ -20,6 +20,7 @@ public class SceneManager : MonoBehaviour
     public static SceneManager Instance { get; private set; }
 
     [Header("Interface Parameters")]
+    [SerializeField] private GameObject _scoreScreen;
     [SerializeField] private GameObject _intermissionScreen;
     [SerializeField] private TMP_Text _activityTitle;
     [SerializeField] private TMP_Text _activityInstruction;
@@ -72,6 +73,8 @@ public class SceneManager : MonoBehaviour
 
     private void StopAnimation()
     {
+        if (_isGameOver) return;
+        
         // Deactivate Canvas Window
         _animationManager.RewindAnimation(_transitionDuration);
     }
@@ -79,9 +82,16 @@ public class SceneManager : MonoBehaviour
     public void StartTransition()
     {
         CloseActivity();
-        GetNextActivity();
-        if (_isGameOver) UpdateScoreScreen(); 
-        else UpdateTransmissionScreen();
+
+        if (_isGameOver)
+        {
+            _scoreScreen.SetActive(true);
+        }
+        else
+        {
+            GetNextActivity();
+            UpdateTransmissionScreen();   
+        }
     }
 
     public void EndTransition()
@@ -120,13 +130,6 @@ public class SceneManager : MonoBehaviour
         var index = _activityIndex;
         while (index == _activityIndex) index = Random.Range(0, _activities.Length);
         _activityIndex = index;
-    }
-
-    private void UpdateScoreScreen()
-    {
-        _activityTitle.text = GetWinner();
-        _player1Health.text = Player1Data.Losses.ToString();
-        _player2Health.text = Player2Data.Losses.ToString();
     }
 
     private void SetParameters()
