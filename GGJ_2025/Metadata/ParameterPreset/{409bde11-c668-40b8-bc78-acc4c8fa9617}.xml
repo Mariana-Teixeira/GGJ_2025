@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{409bde11-c668-40b8-bc78-acc4c8fa9617}">
+		<property name="name">
+			<value>MinigameTime</value>
+		</property>
+		<relationship name="folder">
+			<destination>{a93b9cbd-5dd8-439b-8cdb-e2b0f1f55de3}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{b55a7d84-ab04-4041-9bca-82a694d0c70f}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{b55a7d84-ab04-4041-9bca-82a694d0c70f}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.17999999225139618</value>
+		</property>
+	</object>
+</objects>

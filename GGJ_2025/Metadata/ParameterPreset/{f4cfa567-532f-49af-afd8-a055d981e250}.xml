@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{f4cfa567-532f-49af-afd8-a055d981e250}">
+		<property name="name">
+			<value>MinigameActive</value>
+		</property>
+		<relationship name="folder">
+			<destination>{a93b9cbd-5dd8-439b-8cdb-e2b0f1f55de3}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{9a64a69d-a1b5-48e9-88ab-83c71268d3fe}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{9a64a69d-a1b5-48e9-88ab-83c71268d3fe}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Value A</value>
+			<value>Value B</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

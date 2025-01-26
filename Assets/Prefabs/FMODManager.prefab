@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 134662183884390053}
+  - component: {fileID: 1221882969670121342}
+  - component: {fileID: 3881131750985460557}
   m_Layer: 0
   m_Name: FMODManager
   m_TagString: Untagged
@@ -31,3 +33,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1221882969670121342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886554525193466613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d1788229baf4514f82c5cc3a52c9e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PleaseMusic>k__BackingField:
+    Guid:
+      Data1: 17045840
+      Data2: 1315610614
+      Data3: -1232193620
+      Data4: 486671232
+    Path: event:/MX/MX_GameMusic
+  <SnotClick>k__BackingField:
+    Guid:
+      Data1: 221236734
+      Data2: 1146889921
+      Data3: 54072726
+      Data4: 578119907
+    Path: event:/UI/UI_Click
+  <SnotPop>k__BackingField:
+    Guid:
+      Data1: -1478368022
+      Data2: 1133260048
+      Data3: -62992461
+      Data4: 1528139685
+    Path: event:/SFX/SFX_SnotPop
+  <BathTimeYell>k__BackingField:
+    Guid:
+      Data1: 2102768721
+      Data2: 1281859281
+      Data3: -2037610317
+      Data4: -769024900
+    Path: event:/SFX/SFX_BathTimeYell
+  <SiblingNo>k__BackingField:
+    Guid:
+      Data1: 521362769
+      Data2: 1129306011
+      Data3: 1015890580
+      Data4: 1428914323
+    Path: event:/SFX/SFX_BathTimeNo
+  <MillionareCorrect>k__BackingField:
+    Guid:
+      Data1: -246840043
+      Data2: 1195268941
+      Data3: 906223235
+      Data4: 1780027389
+    Path: event:/SFX/SFX_MillionareCorrect
+  <MillionareWrong>k__BackingField:
+    Guid:
+      Data1: -2011780146
+      Data2: 1311746754
+      Data3: -1431302009
+      Data4: -264324355
+    Path: event:/SFX/SFX_MillionareWrong
+  <BubbleGunPow>k__BackingField:
+    Guid:
+      Data1: 897694406
+      Data2: 1307185821
+      Data3: 957975449
+      Data4: 1378682591
+    Path: event:/SFX/SFX_BubblegunPow
+  <NannyHelp>k__BackingField:
+    Guid:
+      Data1: 956318589
+      Data2: 1311223630
+      Data3: -1919436925
+      Data4: -582231848
+    Path: event:/SFX/SFX_NannyHelp
+--- !u!114 &3881131750985460557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886554525193466613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33630e4a30798d14ab1a6562851d7755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

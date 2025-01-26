@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{6facaeb7-8c41-4847-9cc2-4602074a98ab}">
+		<property name="name">
+			<value>InMinigame</value>
+		</property>
+		<relationship name="folder">
+			<destination>{a93b9cbd-5dd8-439b-8cdb-e2b0f1f55de3}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{16f3b1b5-eb35-4ad1-8a0c-2e3ee83da964}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{16f3b1b5-eb35-4ad1-8a0c-2e3ee83da964}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Value A</value>
+			<value>Value B</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

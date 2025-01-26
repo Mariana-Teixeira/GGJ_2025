@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{bf61a809-14b2-4041-81a0-f89d539041be}">
+		<property name="assetPath">
+			<value>SFX_BathTimeNo.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.70530612244897961</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5fae9446-92ae-4adb-908f-a9262a76fcf8}</destination>
+		</relationship>
+	</object>
+</objects>
