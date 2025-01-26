@@ -10,6 +10,7 @@ namespace Activity.FirstToClick
     {
         public Sprite Idle;
         public Sprite Shouting;
+        public Sprite Embarassed;
     }
     
     public class SpriteManager : MonoBehaviour
@@ -25,12 +26,28 @@ namespace Activity.FirstToClick
         [SerializeField] private TMP_Text _bathTimeLine;
         [SerializeField] private TMP_Text _player1Line;
         [SerializeField] private TMP_Text _player2Line;
+        [SerializeField] private TMP_Text _parent1Line;
+        [SerializeField] private TMP_Text _parent2Line;
         [SerializeField] private float _popSpeed = 0.2f;
         [SerializeField] private Ease _popEase;
+        [Space(10)]
+        [SerializeField] private string _bathTimeMessage;
+        [SerializeField] private string _shoutMessage;
+        [SerializeField] private string _embarassedMessage;
 
         private void Awake()
         {
+            SetText();
             Reset();
+        }
+
+        private void SetText()
+        {
+            _bathTimeLine.text = _bathTimeMessage;
+            _player1Line.text = _shoutMessage;
+            _player2Line.text = _shoutMessage;
+            _parent1Line.text = _embarassedMessage;
+            _parent2Line.text = _embarassedMessage;
         }
 
         public void Reset()
@@ -40,6 +57,8 @@ namespace Activity.FirstToClick
             _bathTimeLine.transform.localScale = Vector3.zero;
             _player1Line.transform.localScale = Vector3.zero;
             _player2Line.transform.localScale = Vector3.zero;
+            _parent1Line.transform.localScale = Vector3.zero;
+            _parent2Line.transform.localScale = Vector3.zero;
         }
 
         public void ChangeToBath()
@@ -47,16 +66,32 @@ namespace Activity.FirstToClick
             _bathTimeLine.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
         }
 
-        public void Player1Shout()
+        public void PlayerEmbarassed(int i)
         {
-            _player1Renderer.sprite = _player1Sprites.Shouting;
-            _player1Line.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
+            if (i == 1)
+            {
+                _player1Renderer.sprite = _player1Sprites.Embarassed;
+                _parent1Line.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
+            }
+            else if (i == 2)
+            {
+                _player2Renderer.sprite = _player2Sprites.Embarassed;
+                _parent2Line.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
+            }
         }
 
-        public void Player2Shout()
+        public void PlayerShout(int i)
         {
-            _player2Renderer.sprite = _player2Sprites.Shouting;
-            _player2Line.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
+            if (i == 1)
+            {
+                _player1Renderer.sprite = _player1Sprites.Shouting;
+                _player1Line.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
+            }
+            else if (i == 2)
+            {
+                _player2Renderer.sprite = _player2Sprites.Shouting;
+                _player2Line.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
+            }
         }
     }
 }

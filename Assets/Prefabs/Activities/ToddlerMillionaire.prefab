@@ -183,25 +183,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onFinish:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
+        m_MethodName: OnFinishActivity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _questionText: {fileID: 3473970735950412246}
   _answer1Text: {fileID: 2330274249580520161}
   _answer2Text: {fileID: 8380431974582356565}
   _miniGameTimerText: {fileID: 2173472929262258504}
   _questionTimerText: {fileID: 3171362594103363911}
   _questionContainers:
-  - Question: Pergunta
-    Answer1: Resposta 1
-    Answer2: Resposta 2
-    CorrectAnswer: Resposta 1
-  - Question: Pergunta 2
-    Answer1: Resposta 1
-    Answer2: Resposta 2
-    CorrectAnswer: Resposta 1
-  - Question: Pergunta 3
-    Answer1: Resposta 1
-    Answer2: Resposta 2
-    CorrectAnswer: Resposta 1
+  - Question: Who is stronger?
+    Answer1: T-Rex
+    Answer2: Dad
+    CorrectAnswer: T-Rex
+  - Question: Which is bigger?
+    Answer1: Two
+    Answer2: Seven
+    CorrectAnswer: Seven
+  - Question: What is faster?
+    Answer1: Snail
+    Answer2: Super Snail
+    CorrectAnswer: Super Snail
 --- !u!1 &1908006993868029564
 GameObject:
   m_ObjectHideFlags: 0

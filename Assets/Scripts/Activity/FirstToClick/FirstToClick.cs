@@ -10,13 +10,15 @@ namespace Activity.FirstToClick
     public struct PlayerData
     {
         public KeyCode Key;
+        public int Number;
         public float Time;
         public bool Clicked;
         public bool ValidClick;
 
-        public PlayerData(KeyCode code)
+        public PlayerData(KeyCode code, int number)
         {
             Key = code;
+            Number = number;
             Time = 0f;
             Clicked = false;
             ValidClick = false;
@@ -50,9 +52,7 @@ namespace Activity.FirstToClick
          private bool _isValidTimer;
          private float _stopwatchTime;
          private float _perfectTime;
-
-         private bool ArePlayersValid => _player1.ValidClick && _player2.ValidClick;
-         private bool HavePlayersClicked => _player1.Clicked && _player2.Clicked;
+         
               
          private void Awake()
          {
@@ -65,8 +65,8 @@ namespace Activity.FirstToClick
              _player1Key = SceneManager.Instance.Player1Data.PrimaryKey;
              _player2Key = SceneManager.Instance.Player2Data.PrimaryKey;
 
-             _player1 = new PlayerData(_player1Key);
-             _player2 = new PlayerData(_player2Key);
+             _player1 = new PlayerData(_player1Key, 1);
+             _player2 = new PlayerData(_player2Key, 2);
          }
          
          public override void StartActivity()
@@ -96,20 +96,23 @@ namespace Activity.FirstToClick
              if (!_isExecuting) return;
              
              _stopwatchTime += Time.deltaTime;
-             CheckForClick(ref _player1);
-             CheckForClick(ref _player2);
+             CheckForClick(ref _player1, _player2);
+             CheckForClick(ref _player2, _player1);
+
+             if (_player1.Clicked && _player2.Clicked) _isExecuting = false;
          }
      
-         private void CheckForClick(ref PlayerData player)
+         private void CheckForClick(ref PlayerData player, PlayerData other)
          {
              if (player.Clicked) return;
              if (!Input.GetKeyDown(player.Key)) return;
              player.ValidClick = _isValidTimer;
              player.Time = _stopwatchTime;
              player.Clicked = true;
-             
-             if (_player1.ValidClick) _spriteManager.Player1Shout();
-             if (_player2.ValidClick) _spriteManager.Player2Shout();
+
+             var quickLoseCondition = (other.Clicked && other.ValidClick) && other.Time <= player.Time;
+             if (player.ValidClick && !quickLoseCondition) _spriteManager.PlayerShout(player.Number);
+             else _spriteManager.PlayerEmbarassed(player.Number);
          }
 
          private IEnumerator Execute()
@@ -126,6 +129,8 @@ namespace Activity.FirstToClick
              _stopwatchTime = 0;
              
              yield return firstTimer;
+             if (!_isExecuting) yield break;
+             
              Debug.Log("BATH TIME!");
              _spriteManager.ChangeToBath();
              _isValidTimer = true;
@@ -142,17 +147,18 @@ namespace Activity.FirstToClick
 
          private Loser GetWinner()
          {
-             var player1Valid = _player1.Clicked || _player1.ValidClick;
-             var player2Valid = _player2.Clicked || _player2.ValidClick;
+             var player1Valid = _player1.ValidClick;
+             var player2Valid = _player2.ValidClick;
              
              // Given at least one is invalid.
+             if (player1Valid && !player2Valid) return Loser.Player2;
+             if (player2Valid && !player1Valid) return Loser.Player1;
              if (!player1Valid && !player2Valid) return Loser.Both;
-             else if (player1Valid && !player2Valid) return Loser.Player2;
-             else if (player2Valid && !player1Valid) return Loser.Player1;
+             
              // Given they are both valid.
-             else if (_player1.Time < _player2.Time) return Loser.Player2;
-             else if (_player2.Time < _player1.Time) return Loser.Player1;
-             else return Loser.Both;
+             if (_player1.Time < _player2.Time) return Loser.Player2;
+             if (_player1.Time > _player2.Time) return Loser.Player1;
+             return Loser.Both;
          }
      }   
 }

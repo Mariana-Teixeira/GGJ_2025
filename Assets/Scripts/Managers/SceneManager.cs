@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -20,7 +21,8 @@ public class SceneManager : MonoBehaviour
 
     [Header("Interface Parameters")]
     [SerializeField] private GameObject _intermissionScreen;
-    [SerializeField] private TMP_Text _intermissionTitle;
+    [SerializeField] private TMP_Text _activityTitle;
+    [SerializeField] private TMP_Text _activityInstruction;
     [SerializeField] private float _transitionDuration;
     [SerializeField] private float _transitionPause;
     private AnimationManager _animationManager;
@@ -89,7 +91,8 @@ public class SceneManager : MonoBehaviour
 
     private void UpdateTransmissionScreen()
     {
-        _intermissionTitle.text = _currentActivity.name;
+        _activityTitle.text = _currentActivity.ActivityName;
+        _activityInstruction.text = _currentActivity.ActivityInstruction;
         
         var player1Life = (_maxLosses - _player1Data.Losses).ToString();
         _player1Health.text = player1Life;
@@ -121,7 +124,7 @@ public class SceneManager : MonoBehaviour
 
     private void UpdateScoreScreen()
     {
-        _intermissionTitle.text = GetWinner();
+        _activityTitle.text = GetWinner();
         _player1Health.text = Player1Data.Losses.ToString();
         _player2Health.text = Player2Data.Losses.ToString();
     }
