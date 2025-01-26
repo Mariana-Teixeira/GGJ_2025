@@ -168,7 +168,7 @@ public class NannyCover : BaseActivity
     private void TimerEnded()
     {
         //both players take damage
-
+        _onFinish.Invoke(new ActivityData(Loser.Both));
         Debug.Log("Both players missed");
     }
 }

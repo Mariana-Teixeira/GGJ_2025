@@ -269,15 +269,18 @@ public class ToddlerMillionaire : BaseActivity
         {
             //equal amount of points
             Debug.Log("Players Draw");
+            _onFinish.Invoke(new ActivityData(Loser.Both));
         }
         else if (_player1Count > _player2Count)
         {
             //player 1 wins
+            _onFinish.Invoke(new ActivityData(Loser.Player2));
             Debug.Log("Player1 wins");
         }
         else if (_player2Count > _player1Count)
         {
             //player 2 wins
+            _onFinish.Invoke(new ActivityData(Loser.Player1));
             Debug.Log("Player2 wins");
 
         }
