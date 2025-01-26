@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Activity.FirstToClick
 {
@@ -15,6 +16,10 @@ namespace Activity.FirstToClick
     
     public class SpriteManager : MonoBehaviour
     {
+        [Header("Unity Events")]
+        [SerializeField] private UnityEvent _onYell;
+        [SerializeField] private UnityEvent _onNo;
+        
         [Header("Sprite Parameters")]
         [SerializeField] private SpriteRenderer _player1Renderer;
         [SerializeField] private PlayerSprites _player1Sprites;
@@ -63,6 +68,7 @@ namespace Activity.FirstToClick
 
         public void ChangeToBath()
         {
+            _onYell.Invoke();
             _bathTimeLine.transform.DOScale(Vector3.one, _popSpeed).SetEase(_popEase);
         }
 
@@ -82,6 +88,8 @@ namespace Activity.FirstToClick
 
         public void PlayerShout(int i)
         {
+            _onNo.Invoke();
+            
             if (i == 1)
             {
                 _player1Renderer.sprite = _player1Sprites.Shouting;
