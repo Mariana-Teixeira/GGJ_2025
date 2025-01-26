@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -16,6 +17,9 @@ public struct QuestionContainer
 
 public class ToddlerMillionaire : BaseActivity
 {
+    [SerializeField] private UnityEvent _onRight;
+    [SerializeField] private UnityEvent _onWrong;
+    
     private KeyCode _player1option1;
     private KeyCode _player1option2;
 
@@ -175,12 +179,14 @@ public class ToddlerMillionaire : BaseActivity
         {
             if (_answer1.Equals(_correctAnswer))
             {
+                _onRight.Invoke();
                 _player1Count++;
                 _correctQuestion = true;
                 Debug.Log("Correct");
             }
             else
             {
+                _onWrong.Invoke();
                 _player1WrongQuestion = true;
                 Debug.Log("Wrong");
             }
@@ -189,12 +195,14 @@ public class ToddlerMillionaire : BaseActivity
         {
             if (_answer2.Equals(_correctAnswer))
             {
+                _onRight.Invoke();
                 _player1Count++;
                 Debug.Log("Correct");
                 _correctQuestion = true;
             }
             else
             {
+                _onWrong.Invoke();
                 _player1WrongQuestion = true;
                 Debug.Log("Wrong");
             }
@@ -204,12 +212,14 @@ public class ToddlerMillionaire : BaseActivity
         {
             if (_answer1.Equals(_correctAnswer))
             {
+                _onRight.Invoke();
                 _player2Count++;
                 Debug.Log("Correct");
                 _correctQuestion = true;
             }
             else
             {
+                _onWrong.Invoke();
                 _player2WrongQuestion = true;
                 Debug.Log("Wrong");
             }
@@ -218,12 +228,14 @@ public class ToddlerMillionaire : BaseActivity
         {
             if (_answer2.Equals(_correctAnswer))
             {
+                _onRight.Invoke();
                 _player2Count++;
                 Debug.Log("Correct");
                 _correctQuestion = true;
             }
             else
             {
+                _onWrong.Invoke();
                 _player2WrongQuestion = true;
                 Debug.Log("Wrong");
             }

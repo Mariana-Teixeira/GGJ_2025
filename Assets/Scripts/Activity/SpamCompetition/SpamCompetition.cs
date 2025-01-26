@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class SpamCompetition : BaseActivity
 {
+    [FormerlySerializedAs("_onSnot")] [SerializeField] private UnityEvent _onSnotPop;
+    
     [SerializeField] [Range(0, 1)] private float _growthModifier;
     [SerializeField] private float _time;
     [SerializeField] private Transform _circle1;
@@ -58,6 +62,7 @@ public class SpamCompetition : BaseActivity
         //player 1 key
         if (Input.GetKeyDown(_player1key))
         {
+            _onSnotPop.Invoke();
             _player1Counter++;
             _circle1.localScale = new Vector3(_player1Counter * _growthModifier, _player1Counter * _growthModifier);
         }
@@ -65,6 +70,7 @@ public class SpamCompetition : BaseActivity
         //player 2 key
         if (Input.GetKeyDown(_player2key))
         {
+            _onSnotPop.Invoke();
             _player2Counter++;
             _circle2.localScale = new Vector3(_player2Counter * _growthModifier, _player2Counter * _growthModifier);
         }

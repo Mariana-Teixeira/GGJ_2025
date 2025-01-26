@@ -160,7 +160,8 @@ public class SceneManager : MonoBehaviour
     {
         if (loser == Loser.Player1) _player1Data.Losses++;
         else if (loser == Loser.Player2) _player2Data.Losses++;
-        else { _player1Data.Losses++; _player2Data.Losses++; }
+        else if (loser == Loser.Both) { _player1Data.Losses++; _player2Data.Losses++; }
+        else Debug.LogWarning("No Player Selected");
     }
 
     private string GetWinner()

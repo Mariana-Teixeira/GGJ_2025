@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class NannyCover : BaseActivity
 {
-
     private KeyCode _player1option1;
     private KeyCode _player1option2;
     private KeyCode _player1option3;
